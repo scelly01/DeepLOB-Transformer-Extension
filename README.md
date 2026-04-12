@@ -1,4 +1,4 @@
-readme = """# DeepLOB: Limit Order Book Price Direction Prediction
+# DeepLOB: Limit Order Book Price Direction Prediction
 
 > Reproducing and extending the DeepLOB architecture (Zhang et al., 2019) with a 
 > Transformer encoder variant — achieving parameter-efficient parity on the FI-2010 benchmark.
@@ -108,5 +108,3 @@ mechanism handles differently. This points to a potential hybrid architecture
 
 ### Confusion Matrices
 ![Confusion Matrices](results/confusion_matrices.png)
-
-### Tr
