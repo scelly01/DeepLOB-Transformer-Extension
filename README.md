@@ -63,8 +63,6 @@ informative for price direction, without the sequential bottleneck of LSTMs. The
 
 ## Results
 
-## Results
-
 | Model | Test Accuracy | Weighted F1 | Parameters |
 |---|---|---|---|
 | MLP Baseline | 0.454 | 0.417 | 1,067,139 |
