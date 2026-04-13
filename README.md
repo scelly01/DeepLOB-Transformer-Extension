@@ -30,32 +30,35 @@ This is a hard problem because:
 - This study uses horizon k=10
 
 ---
-
 ## Architecture Overview
 
-Three models trained and compared end-to-end:
+Four models trained and compared end-to-end:
 
 ### 1. MLP Baseline
-Flattens the 100×40 window into a 4,000-dim vector and passes through dense layers.
-Serves as the lower bound — deliberately ignores sequential and spatial structure.
+Flattens the 100×40 window into a 4,000-dim vector through dense layers.
+Lower bound — deliberately ignores sequential and spatial structure.
 
 ### 2. DeepLOB (reproduction)
 Faithfully reproduces Zhang et al. (2019):
-- **CNN Block 1 & 2**: Conv2D layers extract spatial patterns across price levels
+- **CNN Blocks**: Conv2D layers extract spatial patterns across price levels
 - **Inception Block**: Parallel 1×1, 3×1, 5×1 convolutions capture multi-scale temporal features
 - **LSTM**: 64 units capture long-range temporal dependencies across the 100-step sequence
 
 ### 3. TransformerLOB (extension)
-Identical CNN + Inception front-end as DeepLOB.  
-Replaces the LSTM with a **Transformer encoder block**:
+Identical CNN + Inception front-end. Replaces LSTM with a Transformer encoder:
 - Linear projection (960 → 128 dims)
 - Multi-Head Self-Attention (4 heads, key_dim=32)
 - Feed-Forward Network with residual connections + Layer Normalization
 - Global Average Pooling (vs. LSTM's final hidden state)
 
-**Hypothesis**: Self-attention can learn which timesteps in the LOB sequence are most 
-informative for price direction, without the sequential bottleneck of LSTMs.
+### 4. Ensemble (best result)
+Averages the probability outputs of DeepLOB and TransformerLOB at inference time —
+no retraining required. The two models make complementary errors, making their
+combination more accurate than either alone (67.2% vs 65.8% / 66.7% individually).
 
+**Hypothesis**: Self-attention can learn which timesteps in the LOB sequence are most 
+informative for price direction, without the sequential bottleneck of LSTMs. The ensemble will pick strenghts of the LSTM and add it on top of the Transformer variant strenght and as a result provide better accuracy.
+ 
 ---
 
 ## Results
