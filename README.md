@@ -120,5 +120,5 @@ findings are robust to random initialisation, not an artefact of a lucky seed.
 <img width="1176" height="416" alt="image" src="https://github.com/user-attachments/assets/9b76f048-8e2d-418c-bb4c-f7feab25d46e" />
 
 ### Confusion Matrices
-<img width="653" height="577" alt="image" src="https://github.com/user-attachments/assets/45297f37-8c6a-4306-b7ef-1d5c7f6b055e" />
+<img width="453" height="377" alt="image" src="https://github.com/user-attachments/assets/45297f37-8c6a-4306-b7ef-1d5c7f6b055e" />
 
