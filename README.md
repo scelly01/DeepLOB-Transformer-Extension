@@ -81,38 +81,16 @@ informative for price direction, without the sequential bottleneck of LSTMs. The
 ---
 ## Key Findings
 
-**1. Architecture is decisive — flattening destroys the signal.**
-The MLP baseline (45.4% accuracy, F1=0.42) treats the 100×40 window as a flat
-list, losing both spatial and temporal structure entirely. Its near-zero performance
-on directional classes proves that naive approaches cannot capture the patterns
-embedded in LOB data — the gap between 45% and 67% is purely architectural.
+- **Architecture matters:** MLP baseline fails (45% accuracy), while sequence-aware models reach ~67%, showing spatial + temporal structure is critical.
 
-**2. TransformerLOB outperforms DeepLOB as a standalone model.**
-TransformerLOB (66.7% accuracy) edges above DeepLOB (65.8%) with 14% fewer
-parameters — 251k vs 291k. Self-attention's ability to directly connect any two
-timesteps in the sequence, without the memory decay of sequential LSTM processing,
-gives it a consistent advantage on this dataset. This finding held across multiple
-independent training runs, suggesting it is structural rather than a random seed artefact.
+- **Transformer > LSTM (slightly, with fewer params):** TransformerLOB achieves 66.7% vs DeepLOB’s 65.8% with ~14% fewer parameters, highlighting efficiency of self-attention.
 
-**3. DeepLOB and TransformerLOB have identical weighted F1 — but different error patterns.**
-Both models achieve weighted F1 of 0.660, yet their confusion matrices differ
-meaningfully. The LSTM (DeepLOB) tends toward stronger Down recall while the
-Transformer achieves slightly better Stationary precision. Same aggregate score,
-different failure modes — exactly the condition that makes ensembling effective.
+- **Complementary strengths enable ensembling:** DeepLOB and TransformerLOB have similar F1 (0.66) but different error patterns, making them effective for ensembling.
 
-**4. The ensemble is the headline result — 67.2% accuracy, F1=0.669.**
-Averaging the probability outputs of DeepLOB and TransformerLOB outperforms either
-model alone: +1.4% over DeepLOB, +0.5% over TransformerLOB. The Stationary class
-reaches F1=0.79 — higher than either model achieves individually. Directional
-classes (Down F1=0.53, Up F1=0.52) are also the best across all four models.
-This confirms that LSTM and self-attention capture genuinely complementary signals
-in LOB data rather than redundant ones.
+- **Ensemble performs best:** Combining both models achieves **67.2% accuracy (F1=0.669)**, outperforming individual models.
 
-**5. Results are stable across training runs.**
-This project was trained three times across different Kaggle sessions. TransformerLOB
-consistently matched or outperformed DeepLOB, and the ensemble consistently produced
-the best result. Variance across runs was under 1.5% on all metrics — indicating the
-findings are robust to random initialisation, not an artefact of a lucky seed.
+- **Stable results:** Performance consistent across runs (<1.5% variance), indicating robustness.
+
 
 ## Visualizations
 <img width="1176" height="416" alt="image" src="https://github.com/user-attachments/assets/9b76f048-8e2d-418c-bb4c-f7feab25d46e" />
